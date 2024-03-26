@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+  dev-db:
+    image: postgres:15
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+      POSTGRES_DB: food_repo
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
+# services:
+# # service for web application
+#   web:
+#     container_name: food_web
+#     build:
+#       context: .
+#     ports:
+#       - 9229:9229
+#       - 3000:3000
+#     command: npm run start:dev
+# volumes:
+#       - .:/usr/src/app
+#       - ./usr/src/app/node_modules
+# env_file:
+#       - .env
+
+#     depends_on:
+#       - postgres
+
+#   # service for postgres database
+#   postgres:
+#     container_name: food_repo_postgres
+#     image: postgres:12-alpine
+#     environment:
+#       POSTGRES_USER: ${DB_USERNAME}
+#       POSTGRES_PASSWORD: ${DB_PASSWORD}
+#       POSTGRES_DB: ${DB_NAME}
+#       POSTGRES_HOST: ${DB_HOST}
+#       POSTGRES_PORT: ${DB_PORT}
+# ports:
+#       - 5432:5432
+#     volumes:
+#       - pgdata:/var/lib/postgresql/data
+# volumes:
+#   pgdata:
