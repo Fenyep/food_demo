@@ -12,10 +12,10 @@ jobs:
       - checkout
       - run:
           name: npm update
-          command: sudo npm install -g npm@latest
+          command: sudo npm install -g yarn@latest
       - run:
           name: run automated tests
-          command: npm test
+          command: yarn test
 
   # food_demo_build_node:
   #   # Build node project
