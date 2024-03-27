@@ -35,20 +35,15 @@ jobs:
           condition:
             equal: [ main, << pipeline.git.branch >> ]
           steps:
+            # Builds the docker image and deploys it on dockerhub
             - run:
                 name: Build and Push Docker Image
                 command: |
-                  docker build -t $DOCKERHUB_USERNAME/blog-demo:latest .
+                  docker build -t $DOCKERHUB_USERNAME/food-demo:latest .
                   docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD docker.io
-                  docker push $DOCKERHUB_USERNAME/blog-demo:latest
+                  docker push $DOCKERHUB_USERNAME/food-demo:latest
       
-      # Builds the docker image and deploys it on dockerhub
-      - run:
-          name: Build and Push Docker Image
-          command: |
-            docker build -t $DOCKERHUB_USERNAME/food-demo:latest .
-            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD docker.io
-            docker push $DOCKERHUB_USERNAME/food-demo:latest
+      
 
 # Define workflows. Like a small orchestration on how the jobs will be executed
 workflows:
