@@ -5,7 +5,7 @@ jobs:
   build:
     # Using CircleCi DOcker image for Node.js
     docker:
-      - image: circleci/node:16.14.0
+      - image: circleci/node:latest
     steps:
       # Checkout (Clone the repository to circleci on every commit) the repository
       - checkout
