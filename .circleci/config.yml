@@ -1,52 +1,77 @@
 version: 2.1
-orbs:
-  node: circleci/node@5
 jobs:
-  food_demo_test_node:
-    # Build node project
-    # executor: node/default
+  food_demo_deployment_process:
     docker:
       - image: cimg/node:19.8.1
-      # - image: cimg/base:stable
     steps:
       - checkout
       - run:
           name: npm update
-          command: sudo npm install -g yarn@latest
+          command: sudo npm install -g npm@latest
+      
+      #new
+      - run:
+          name: install jest
+          command: sudo npm install --save-dev jest ts-jest
       - run:
           name: run automated tests
-          command: yarn test
+          command: npm test
 
-  # food_demo_build_node:
-  #   # Build node project
-  #   executor: node/default
-  #   steps:
-  #     - checkout
-  #     - node/install-packages:
-  #         pkg-manager: yarn
-  #     - run:
-  #         name: run automated build
-  #         command: yarn build
-
-  # food_demo_deployment_node:
-  #   # Using the docker image of node js to deploy on docker
-  #   docker:
-  #     - image: cimg/node:19.8.1
-  #   steps:
-  #     # Checkout (Clone the repository to circleci on every commit) the repository
-  #     - checkout
-  #     - run:
-  #         # Name of the step
-  #         name: npm update
-  #         # Install the latest version of npm
-  #         command: sudo npm install -g npm@lastest
-  #     - run:
-  #         name: run automated tests
-  #         command: npm test
 
 workflows:
-  food_demo:
+  food-demo: 
     jobs:
-      - food_demo_test_node
-      # - food_demo_build_node
-      # - food_demo_deployment_node
+      - food_demo_deployment_process
+
+# version: 2.1
+# orbs:
+#   node: circleci/node@5
+# jobs:
+#   food_demo_test_node:
+#     # Build node project
+#     # executor: node/default
+#     docker:
+#       - image: cimg/node:19.8.1
+#       # - image: cimg/base:stable
+#     steps:
+#       - checkout
+#       - run:
+#           name: npm update
+#           command: sudo npm install -g yarn@latest
+#       - run:
+#           name: run automated tests
+#           command: yarn test
+
+#   # food_demo_build_node:
+#   #   # Build node project
+#   #   executor: node/default
+#   #   steps:
+#   #     - checkout
+#   #     - node/install-packages:
+#   #         pkg-manager: yarn
+#   #     - run:
+#   #         name: run automated build
+#   #         command: yarn build
+
+#   # food_demo_deployment_node:
+#   #   # Using the docker image of node js to deploy on docker
+#   #   docker:
+#   #     - image: cimg/node:19.8.1
+#   #   steps:
+#   #     # Checkout (Clone the repository to circleci on every commit) the repository
+#   #     - checkout
+#   #     - run:
+#   #         # Name of the step
+#   #         name: npm update
+#   #         # Install the latest version of npm
+#   #         command: sudo npm install -g npm@lastest
+#   #     - run:
+#   #         name: run automated tests
+#   #         command: npm test
+
+# workflows:
+#   food_demo:
+#     jobs:
+#       - food_demo_test_node
+#       # - food_demo_build_node
+#       # - food_demo_deployment_node
