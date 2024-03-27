@@ -14,8 +14,10 @@ jobs:
       # Checkout (Clone the repository to circleci on every commit) the repository
       - checkout
 
-      #new
+      # Helps to run docker commands in the executor
       - setup_remote_docker:
+          # Caches the DockerFile in the job to rebuilt from the previous builds if no changes in the Dockerfile
+          # This minimizes the time to build the image
           docker_layer_caching: true
 
       - run:
