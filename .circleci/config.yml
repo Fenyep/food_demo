@@ -1,10 +1,12 @@
 version: 2.1
+orbs:
+  node: circleci/node@5
 jobs:
   food_demo_test_node:
     # Build node project
     # executor: node/default
     docker:
-      - image: cimg/node:19.8.1
+      - image: cimg/base:stable
     steps:
       - checkout
       - node/install-packages:
