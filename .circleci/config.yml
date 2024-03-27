@@ -1,8 +1,10 @@
 version: 2.1
+orbs:
+  node: circleci/node@5
 jobs:
   food_demo_deployment_process:
     docker:
-      - image: cimg/node:19.8.1
+      - image: cimg/base:stable
     steps:
       - checkout
       - run:
