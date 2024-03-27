@@ -6,9 +6,18 @@ jobs:
     # Using CircleCi DOcker image for Node.js
     docker:
       - image: circleci/node:latest
+        # Setting dockerhub auth configs to deploy to our dockerhub
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
     steps:
       # Checkout (Clone the repository to circleci on every commit) the repository
       - checkout
+
+      #new
+      - setup_remote_docker:
+          docker_layer_caching: true
+
       - run:
           # Command name
           name: Install dependencies
@@ -17,6 +26,14 @@ jobs:
       - run:
           name: Run automated tests
           command: yarn test
+      
+            #new
+      - run:
+          name: Build and Push Docker Image
+          command: |
+            docker build -t $DOCKERHUB_USERNAME/food-demo:latest .
+            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD docker.io
+            docker push $DOCKERHUB_USERNAME/food-demo:latest
 
 # Define workflows. Like a small orchestration on how the jobs will be executed
 workflows:
@@ -24,6 +41,7 @@ workflows:
   food-demo-build: 
     jobs:
       - build: 
+          context: food_demo
           # Filter to trigger the workflow
           filters:
             # Specify the branches filters
