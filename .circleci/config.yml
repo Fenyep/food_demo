@@ -9,11 +9,12 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn
+      - run:
+          name: npm update
+          command: sudo npm install -g npm@latest
       - run:
           name: run automated tests
-          command: yarn test
+          command: npm test
 
   # food_demo_build_node:
   #   # Build node project
