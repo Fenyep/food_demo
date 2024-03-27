@@ -6,7 +6,8 @@ jobs:
     # Build node project
     # executor: node/default
     docker:
-      - image: cimg/base:stable
+      - image: cimg/node:19.8.1
+      # - image: cimg/base:stable
     steps:
       - checkout
       - run:
