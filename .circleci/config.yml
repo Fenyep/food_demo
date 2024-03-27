@@ -1,29 +1,37 @@
 version: 2.1
-orbs:
-  node: circleci/node@5
+# Definition of the pipeline jobs
 jobs:
-  food_demo_deployment_process:
+  # Build node project
+  build:
+    # Using CircleCi DOcker image for Node.js
     docker:
-      - image: cimg/base:stable
+      - image: circleci/node:latest
     steps:
+      # Checkout (Clone the repository to circleci on every commit) the repository
       - checkout
       - run:
-          name: npm update
-          command: sudo npm install -g npm@latest
-      
-      #new
+          # Command name
+          name: Install dependencies
+          # Command code
+          command: yarn install
       - run:
-          name: install jest
-          command: sudo npm install --save-dev jest ts-jest
-      - run:
-          name: run automated tests
-          command: npm test
+          name: Run automated tests
+          command: yarn test
 
-
+# Define workflows. Like a small orchestration on how the jobs will be executed
 workflows:
-  food-demo: 
+  version: 2
+  food-demo-build: 
     jobs:
-      - food_demo_deployment_process
+      - build: 
+          # Filter to trigger the workflow
+          filters:
+            # Specify the branches filters
+            branches:
+              # Will execute only on changes on these two branches
+              only:
+                - main
+                - ci-cd
 
 # version: 2.1
 # orbs:
