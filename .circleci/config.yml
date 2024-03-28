@@ -22,18 +22,18 @@ jobs:
 
       - run:
           # Command name
-          name: Install dependencies
+          name: Install the test dependencies
           # Command code
-          command: yarn install
+          command: yarn add jest ts-jest @types/jest -D
       - run:
           name: Run automated tests
           command: yarn test
 
       # Conditions
       - when:
-          # Push the image from the main branch when all pull requests are accepted 
+          # Push the image from the main branch when all pull requests are accepted
           condition:
-            equal: [ main, << pipeline.git.branch >> ]
+            equal: [main, << pipeline.git.branch >>]
           steps:
             # Builds the docker image and deploys it on dockerhub
             - run:
@@ -42,15 +42,13 @@ jobs:
                   docker build -t $DOCKERHUB_USERNAME/food-demo:latest .
                   docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD docker.io
                   docker push $DOCKERHUB_USERNAME/food-demo:latest
-      
-      
 
 # Define workflows. Like a small orchestration on how the jobs will be executed
 workflows:
   version: 2
-  food-demo-build: 
+  food-demo-build:
     jobs:
-      - build: 
+      - build:
           context: food_demo
           # Filter to trigger the workflow
           filters:
