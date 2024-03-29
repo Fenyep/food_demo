@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Food } from './entities/food.entity';
 import { Repository } from 'typeorm';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { NewMealEvent } from 'src/events/new-meal.event';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FoodMenuEvents } from 'src/enums/enums';
+import { FoodMenuEvents } from '../enums/enums';
+import { NewMealEvent } from '../events/new-meal.event';
 
 @Injectable()
 export class FoodMenuService {
