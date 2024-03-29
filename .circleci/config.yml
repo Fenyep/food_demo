@@ -5,7 +5,7 @@ jobs:
   build:
     # Using CircleCi DOcker image for Node.js
     docker:
-      - image: circleci/node:latest
+      - image: circleci/node:16.14.0
         # Setting dockerhub auth configs to deploy to our dockerhub
         auth:
           username: $DOCKERHUB_USERNAME
@@ -20,17 +20,17 @@ jobs:
           # This minimizes the time to build the image
           docker_layer_caching: true
 
-      - run:
-          # Command name
-          name: Install node version 16.14.0
-          # Command code
-          command: nvm install 16.14.0
+      # - run:
+      #     # Command name
+      #     name: Install node version 16.14.0
+      #     # Command code
+      #     command: nvm install 16.14.0
 
-      - run:
-          # Command name
-          name: Switch to the installed nodejs version
-          # Command code
-          command: nvm use 16.14.0      
+      # - run:
+      #     # Command name
+      #     name: Switch to the installed nodejs version
+      #     # Command code
+      #     command: nvm use 16.14.0      
       
       - run:
           # Command name
