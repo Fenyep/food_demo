@@ -22,9 +22,21 @@ jobs:
 
       - run:
           # Command name
+          name: Install node version 16.14.0
+          # Command code
+          command: nvm install 16.14.0
+
+      - run:
+          # Command name
+          name: Switch to the installed nodejs version
+          # Command code
+          command: nvm use 16.14.0      
+      
+      - run:
+          # Command name
           name: Install the test dependencies
           # Command code
-          command: yarn add jest ts-jest @types/jest -D
+          command: yarn add jest ts-jest @types/jest -P -D
       - run:
           name: Run automated tests
           command: yarn test
