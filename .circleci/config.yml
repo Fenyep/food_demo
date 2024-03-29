@@ -36,7 +36,7 @@ jobs:
           # Command name
           name: Install the test dependencies
           # Command code
-          command: yarn add jest ts-jest @types/jest -P -D
+          command: yarn add jest ts-jest @types/jest -D
       - run:
           name: Run automated tests
           command: yarn test
