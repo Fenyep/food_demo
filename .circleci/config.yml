@@ -18,20 +18,7 @@ jobs:
       - setup_remote_docker:
           # Caches the DockerFile in the job to rebuilt from the previous builds if no changes in the Dockerfile
           # This minimizes the time to build the image
-          docker_layer_caching: true
-
-      # - run:
-      #     # Command name
-      #     name: Install node version 16.14.0
-      #     # Command code
-      #     command: nvm install 16.14.0
-
-      # - run:
-      #     # Command name
-      #     name: Switch to the installed nodejs version
-      #     # Command code
-      #     command: nvm use 16.14.0      
-      
+          docker_layer_caching: true     
       - run:
           # Command name
           name: Install the test dependencies
