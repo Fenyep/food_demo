@@ -5,7 +5,7 @@ jobs:
   build:
     # Using CircleCi DOcker image for Node.js
     docker:
-      - image: cimg/node:17.2.0
+      - image: cimg/node:18.10.0
         # Setting dockerhub auth configs to deploy to our dockerhub
         auth:
           username: $DOCKERHUB_USERNAME

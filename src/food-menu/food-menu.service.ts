@@ -24,9 +24,9 @@ export class FoodMenuService {
    *
    * @param {string} name - The name of the menu item
    * @param {number} price - The price of the menu item
-   * @return {Food} The newly created menu item
+   * @returns {Promise<Food>} The newly created menu item
    */
-  async createMenuItem(name: string, price: number) {
+  async createMenuItem(name: string, price: number): Promise<Food> {
     const food = this.foodRepo.create({ name, price });
     await this.foodRepo.save(food);
 
@@ -38,9 +38,9 @@ export class FoodMenuService {
   /**
    * Retrieves the menu items from the food repository.
    *
-   * @return {Promise<Food[]>} A promise that resolves to an array of food items.
+   * @returns {Promise<Food[]>} A promise that resolves to an array of food items.
    */
-  async getMenuItems() {
+  async getMenuItems(): Promise<Food[]> {
     return await this.foodRepo.find();
   }
 }
