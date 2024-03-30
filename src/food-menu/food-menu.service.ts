@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Food } from './entities/food.entity';
 import { Repository } from 'typeorm';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { NewMealEvent } from 'src/events/new-meal.event';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FoodMenuEvents } from 'src/enums/enums';
+import { FoodMenuEvents } from '../enums/enums';
+import { NewMealEvent } from '../events/new-meal.event';
 
 @Injectable()
 export class FoodMenuService {
@@ -24,9 +24,9 @@ export class FoodMenuService {
    *
    * @param {string} name - The name of the menu item
    * @param {number} price - The price of the menu item
-   * @return {Food} The newly created menu item
+   * @returns {Promise<Food>} The newly created menu item
    */
-  async createMenuItem(name: string, price: number) {
+  async createMenuItem(name: string, price: number): Promise<Food> {
     const food = this.foodRepo.create({ name, price });
     await this.foodRepo.save(food);
 
@@ -38,9 +38,9 @@ export class FoodMenuService {
   /**
    * Retrieves the menu items from the food repository.
    *
-   * @return {Promise<Food[]>} A promise that resolves to an array of food items.
+   * @returns {Promise<Food[]>} A promise that resolves to an array of food items.
    */
-  async getMenuItems() {
+  async getMenuItems(): Promise<Food[]> {
     return await this.foodRepo.find();
   }
 }

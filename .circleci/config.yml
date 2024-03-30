@@ -1,48 +1,59 @@
 version: 2.1
+# Definition of the pipeline jobs
 jobs:
-  food_demo_test_node:
-    # Build node project
-    # executor: node/default
+  # Build node project
+  build:
+    # Using CircleCi DOcker image for Node.js
     docker:
-      - image: cimg/node:19.8.1
+      - image: cimg/node:18.10.0
+        # Setting dockerhub auth configs to deploy to our dockerhub
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
     steps:
+      # Checkout (Clone the repository to circleci on every commit) the repository
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn
+
+      # Helps to run docker commands in the executor
+      - setup_remote_docker:
+          # Caches the DockerFile in the job to rebuilt from the previous builds if no changes in the Dockerfile
+          # This minimizes the time to build the image
+          docker_layer_caching: true     
       - run:
-          name: run automated tests
+          # Command name
+          name: Install the test dependencies
+          # Command code
+          command: yarn add jest ts-jest @types/jest -D
+      - run:
+          name: Run automated tests
           command: yarn test
 
-  # food_demo_build_node:
-  #   # Build node project
-  #   executor: node/default
-  #   steps:
-  #     - checkout
-  #     - node/install-packages:
-  #         pkg-manager: yarn
-  #     - run:
-  #         name: run automated build
-  #         command: yarn build
+      # Conditions
+      - when:
+          # Push the image from the main branch when all pull requests are accepted
+          condition:
+            equal: [main, << pipeline.git.branch >>]
+          steps:
+            # Builds the docker image and deploys it on dockerhub
+            - run:
+                name: Build and Push Docker Image
+                command: |
+                  docker build -t $DOCKERHUB_USERNAME/food-demo:latest .
+                  docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD docker.io
+                  docker push $DOCKERHUB_USERNAME/food-demo:latest
 
-  # food_demo_deployment_node:
-  #   # Using the docker image of node js to deploy on docker
-  #   docker:
-  #     - image: cimg/node:19.8.1
-  #   steps:
-  #     # Checkout (Clone the repository to circleci on every commit) the repository
-  #     - checkout
-  #     - run:
-  #         # Name of the step
-  #         name: npm update
-  #         # Install the latest version of npm
-  #         command: sudo npm install -g npm@lastest
-  #     - run:
-  #         name: run automated tests
-  #         command: npm test
-
+# Define workflows. Like a small orchestration on how the jobs will be executed
 workflows:
-  food_demo:
+  version: 2
+  food-demo-build:
     jobs:
-      - food_demo_test_node
-      # - food_demo_build_node
-      # - food_demo_deployment_node
+      - build:
+          context: food_demo
+          # Filter to trigger the workflow
+          filters:
+            # Specify the branches filters
+            branches:
+              # Will execute only on changes on these two branches
+              only:
+                - main
+                - ci-cd

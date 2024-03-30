@@ -34,6 +34,9 @@
     "rxjs": "^7.2.0",
     "typeorm": "^0.3.20"
   },
+  "engines": {
+    "node": ">=18.10.0"
+  },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
